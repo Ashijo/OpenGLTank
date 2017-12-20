@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Cone.h</itemPath>
       <itemPath>Constantes.h</itemPath>
       <itemPath>Cube.h</itemPath>
       <itemPath>Game.h</itemPath>
@@ -15,6 +16,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Cone.cpp</itemPath>
       <itemPath>Cube.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -47,6 +49,10 @@
           <commandLine>-lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_gfx -lGL -lGLU</commandLine>
         </linkerTool>
       </compileType>
+      <item path="Cone.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Cone.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Constantes.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Cube.cpp" ex="false" tool="1" flavor2="0">
@@ -81,6 +87,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Cone.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Cone.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Constantes.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Cube.cpp" ex="false" tool="1" flavor2="0">

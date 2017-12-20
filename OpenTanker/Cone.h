@@ -5,31 +5,28 @@
  */
 
 /* 
- * File:   Cube.h
+ * File:   Cone.h
  * Author: androidlinux
  *
- * Created on December 19, 2017, 10:27 AM
+ * Created on December 20, 2017, 11:41 AM
  */
 
-#ifndef CUBE_H
-#define CUBE_H
-
+#ifndef CONE_H
+#define CONE_H
 #include <SDL2/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-
-class Cube {
-public:    
-    Cube();
-    virtual ~Cube();
+class Cone {
+public:
+    Cone();
+    Cone(const Cone& orig);
+    virtual ~Cone();
     void render();
-    Cube(GLubyte r,GLubyte g,GLubyte b);
-    
 private:
-    GLuint idGPU;
+    GLUquadric* params;
 
 };
 
-#endif /* CUBE_H */
+#endif /* CONE_H */
 

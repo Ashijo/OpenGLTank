@@ -18,68 +18,122 @@
 
 
 
-Cube::Cube(int largeur,int  profondeur,int  hauteur) {
-    this->largeur = largeur;
-    this->profondeur = profondeur;
-    this->hauteur = hauteur;
-    
+Cube::Cube() {
     idGPU = glGenLists(1);
     glNewList(idGPU, GL_COMPILE);
     
-        glBegin(GL_QUADS);
+    
+    
+    glBegin(GL_QUADS);
         glColor3ub(255, 255, 255);
-        glVertex3i(largeur/2*-1, profondeur/2*-1, 0);
-        glVertex3i(largeur/2*-1, profondeur/2, 0);
-        glVertex3i(largeur/2, profondeur/2, 0);
-        glVertex3i(largeur/2, profondeur/2*-1, 0);
+        glVertex3i( -1, -1, 0);
+        glVertex3i( -1, 1, 0);
+        glVertex3i( 1, 1, 0);
+        glVertex3i( 1, -1, 0);
     glEnd();
 
     glBegin(GL_QUADS);
         glColor3ub(62, 101, 191);
-        glVertex3i( largeur/2, profondeur/2*-1, 0);
-        glVertex3i( largeur/2, profondeur/2*-1, hauteur);
-        glVertex3i( largeur/2, profondeur/2, hauteur);
-        glVertex3i( largeur/2, profondeur/2, 0);
+        glVertex3i( 1, -1, 0);
+        glVertex3i( 1, -1, 2);
+        glVertex3i( 1, 1, 2);
+        glVertex3i( 1, 1, 0);
     glEnd();
 
-        glBegin(GL_QUADS);
+    glBegin(GL_QUADS);
         glColor3ub(57, 83, 142);
-        glVertex3i(largeur/2,profondeur/2*-1, 0);
-        glVertex3i(largeur/2,profondeur/2*-1, hauteur);
-        glVertex3i(largeur/2*-1,profondeur/2*-1, hauteur);
-        glVertex3i(largeur/2*-1,profondeur/2*-1, 0);
-        glEnd();
-
-    
-        glBegin(GL_QUADS);
-        glColor3ub(57, 83, 142);
-        glVertex3i( largeur/2*-1,  profondeur/2*-1, 0);
-        glVertex3i( largeur/2*-1, profondeur/2*-1, hauteur);
-        glVertex3i( largeur/2*-1, profondeur/2, hauteur);
-        glVertex3i( largeur/2*-1, profondeur/2, 0);
-        glEnd();
-
-        glBegin(GL_QUADS);
-        glColor3ub(57, 83, 142);
-        glVertex3i( largeur/2, profondeur/2, 0);
-        glVertex3i( largeur/2, profondeur/2, hauteur);
-        glVertex3i( largeur/2*-1, profondeur/2, hauteur);
-        glVertex3i( largeur/2*-1, profondeur/2, 0);
-        glEnd();
-
-        glBegin(GL_QUADS);
-        glColor3ub(255, 255, 255);
-        glVertex3i( largeur/2*-1, profondeur/2*-1, hauteur);
-        glVertex3i( largeur/2*-1, profondeur/2, hauteur);
-        glVertex3i( largeur/2, profondeur/2, hauteur);
-        glVertex3i( largeur/2, profondeur/2*-1, hauteur);
-        glEnd();
-
+        glVertex3i( 1,-1, 0);
+        glVertex3i( 1,-1, 2);
+        glVertex3i( -1,-1, 2);
+        glVertex3i( -1,-1, 0);
+    glEnd();
         
-        glEndList();
-    
-    
+    glBegin(GL_QUADS);
+        glColor3ub(57, 83, 142);
+        glVertex3i( -1, -1, 0);
+        glVertex3i( -1, -1, 2);
+        glVertex3i( -1, 1, 2);
+        glVertex3i( -1, 1, 0);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3ub(57, 83, 142);
+        glVertex3i( 1, 1, 0);
+        glVertex3i( 1, 1, 2);
+        glVertex3i( -1, 1, 2);
+        glVertex3i( -1, 1, 0);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3ub(255, 255, 255);
+        glVertex3i( -1, -1, 2);
+        glVertex3i( -1, 1, 2);
+        glVertex3i( 1, 1, 2);
+        glVertex3i( 1, -1, 2);
+    glEnd();
+
+    glEndList();
 }
+
+
+Cube::Cube(GLubyte r,GLubyte g,GLubyte b) {
+    idGPU = glGenLists(1);
+    glNewList(idGPU, GL_COMPILE);
+    
+    
+    
+    glBegin(GL_QUADS);
+        glColor3ub(r, g, b);
+        glVertex3i( -1, -1, 0);
+        glVertex3i( -1, 1, 0);
+        glVertex3i( 1, 1, 0);
+        glVertex3i( 1, -1, 0);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3ub(r, g, b);
+        glVertex3i( 1, -1, 0);
+        glVertex3i( 1, -1, 2);
+        glVertex3i( 1, 1, 2);
+        glVertex3i( 1, 1, 0);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3ub(r, g, b);
+        glVertex3i( 1,-1, 0);
+        glVertex3i( 1,-1, 2);
+        glVertex3i( -1,-1, 2);
+        glVertex3i( -1,-1, 0);
+    glEnd();
+        
+    glBegin(GL_QUADS);
+        glColor3ub(r, g, b);
+        glVertex3i( -1, -1, 0);
+        glVertex3i( -1, -1, 2);
+        glVertex3i( -1, 1, 2);
+        glVertex3i( -1, 1, 0);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3ub(r, g, b);
+        glVertex3i( 1, 1, 0);
+        glVertex3i( 1, 1, 2);
+        glVertex3i( -1, 1, 2);
+        glVertex3i( -1, 1, 0);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3ub(r, g, b);
+        glVertex3i( -1, -1, 2);
+        glVertex3i( -1, 1, 2);
+        glVertex3i( 1, 1, 2);
+        glVertex3i( 1, -1, 2);
+    glEnd();
+
+    glEndList();
+}
+
+
 
 
 Cube::~Cube() {

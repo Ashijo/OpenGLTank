@@ -14,12 +14,20 @@
 #ifndef CUBE_H
 #define CUBE_H
 
+#include <SDL2/SDL.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+
+
 class Cube {
-public:
-    Cube();
-    Cube(const Cube& orig);
+public:    
+    Cube(int largeur,int  profondeur,int  hauteur);
     virtual ~Cube();
+    void render();
+    
 private:
+    int largeur, profondeur, hauteur;
+    GLuint idGPU;
 
 };
 

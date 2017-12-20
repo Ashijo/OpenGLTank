@@ -4,7 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Constantes.h</itemPath>
       <itemPath>Cube.h</itemPath>
+      <itemPath>Game.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -14,6 +16,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Cube.cpp</itemPath>
+      <itemPath>Game.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -44,9 +47,15 @@
           <commandLine>-lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_gfx -lGL -lGLU</commandLine>
         </linkerTool>
       </compileType>
+      <item path="Constantes.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Cube.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Cube.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Game.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -72,9 +81,15 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Constantes.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Cube.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Cube.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Game.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

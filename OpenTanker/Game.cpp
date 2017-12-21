@@ -24,6 +24,7 @@ void Game::Init() {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
     ctx = SDL_GL_CreateContext(win);
+    SDL_ShowCursor(SDL_DISABLE);
 
     dirX = 10;
     dirY = 10;
@@ -31,10 +32,23 @@ void Game::Init() {
     
     eyeX = 40;
     eyeY = 40;
-    eyeZ = 10;
+    eyeZ = 20;
     
+    std::string skyDown = "textures/skybox/down.jpg";
+    std::string skyLeft = "textures/skybox/left.jpg";
+    std::string skyFront = "textures/skybox/back.jpg";
+    std::string skyRight = "textures/skybox/right.jpg";
+    std::string skyBack = "textures/skybox/front.jpg";
+    std::string skyUp = "textures/skybox/up.jpg";
     
-    c = new Cube(60,55,255);
+    idTest[0] = loadTexture(skyDown.c_str());
+    idTest[1] = loadTexture(skyLeft.c_str());
+    idTest[2] = loadTexture(skyFront.c_str());
+    idTest[3] = loadTexture(skyRight.c_str());
+    idTest[4] = loadTexture(skyBack.c_str());
+    idTest[5] = loadTexture(skyUp.c_str());
+    
+    c = new Cube(idTest);
     cone = new Cone();
     
     glMatrixMode(GL_PROJECTION);
@@ -57,8 +71,7 @@ void Game::Start() {
         start = SDL_GetTicks();
 
         event();
-                
-                
+        
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glMatrixMode(GL_MODELVIEW);
@@ -73,12 +86,13 @@ void Game::Start() {
 
         
 
-        glScaled(100,100,1);
+        glScaled(200,200,200);
         c->render();
         
         glLoadIdentity();
-        glColor3ub(255,0,255);
-        cone->render();
+        
+        //glColor3ub(255,0,255);
+        //cone->render();
 
         //mettre a jour l ecran
         SDL_GL_SwapWindow(win);
@@ -97,6 +111,7 @@ void Game::Start() {
 
 void Game::Free() {
 
+    glDeleteTextures(6, idTest);
     SDL_GL_DeleteContext(ctx);
     SDL_DestroyWindow(win);
     IMG_Quit();
@@ -132,17 +147,15 @@ void Game::event(){
         dirZ--;
     }
     if (x < -1){
-        alphaDir-=10;
+        alphaDir-=20;
     }
     if (x > 1){
-        alphaDir+=10;
+        alphaDir+=20;
     }
     
     //calcul de la direction du regard
-    dirX = eyeX + toDeg(sin(toRad(alphaDir)))*2;
-    dirY = eyeY + toDeg(cos(toRad(alphaDir)))*2;
-    
-    
+    dirX = eyeX + toDeg(sin(toRad(alphaDir)));
+    dirY = eyeY + toDeg(cos(toRad(alphaDir)));
     
     //gestion des evenements clavier
     SDL_Event event;
@@ -152,7 +165,7 @@ void Game::event(){
             isRunning = false;
         if(states[SDL_SCANCODE_W]){
             //vers l'avant
-             i = dirX - eyeX;
+            i = dirX - eyeX;
             eyeX += (i/50);
             i = dirY - eyeY;
             eyeY += (i/50);
@@ -170,14 +183,13 @@ void Game::event(){
             dirXLateral = eyeX + toDeg(sin(toRad(alphaLateral)))*2;
             dirYLateral = eyeY + toDeg(cos(toRad(alphaLateral)))*2;
             
-            std::cout << "alpha dir : " << alphaDir << std::endl;
-            std::cout << "alphaLateral : " << alphaLateral << std::endl;
-            std::cout << "cos(toRad(alphaB)) : " << cos(toRad(alphaLateral)) << std::endl;
-            std::cout << "sin(toRad(alphaB)) : " << sin(toRad(alphaLateral)) << std::endl;
-            std::cout << " dirX - eyeX : " << dirXLateral - eyeX << std::endl;
-            std::cout << " dirY - eyeY : " << dirYLateral - eyeY << std::endl;
-            std::cout << "dirX : " << dirXLateral << ".  dirY :" << dirYLateral<< ".  dirZ :" << dirZ << std::endl;
-
+//            std::cout << "alpha dir : " << alphaDir << std::endl;
+//            std::cout << "alphaLateral : " << alphaLateral << std::endl;
+//            std::cout << "cos(toRad(alphaB)) : " << cos(toRad(alphaLateral)) << std::endl;
+//            std::cout << "sin(toRad(alphaB)) : " << sin(toRad(alphaLateral)) << std::endl;
+//            std::cout << " dirX - eyeX : " << dirXLateral - eyeX << std::endl;
+//            std::cout << " dirY - eyeY : " << dirYLateral - eyeY << std::endl;
+//            std::cout << "dirX : " << dirXLateral << ".  dirY :" << dirYLateral<< ".  dirZ :" << dirZ << std::endl;
             
             i = dirXLateral - eyeX;
             eyeX -= (i/50);
@@ -189,24 +201,12 @@ void Game::event(){
             dirXLateral = eyeX + toDeg(sin(toRad(alphaLateral)))*2;
             dirYLateral = eyeY + toDeg(cos(toRad(alphaLateral)))*2;
             
-//            std::cout << "alpha dir : " << alphaDir << std::endl;
-//            std::cout << "alpha B : " << alphaB << std::endl;
-//            std::cout << "cos(toRad(alphaB)) : " << cos(toRad(alphaB)) << std::endl;
-//            std::cout << "sin(toRad(alphaB)) : " << sin(toRad(alphaB)) << std::endl;
-//            std::cout << " dirX - eyeX : " << dirX - eyeX << std::endl;
-//            std::cout << " dirY - eyeY : " << dirY - eyeY << std::endl;
-//            std::cout << "dirX : " << dirX << ".  dirY :" << dirY<< ".  dirZ :" << dirZ << std::endl;
-
-            
-            
             i = dirXLateral - eyeX;
             eyeX -= (i/50);
             i = dirYLateral - eyeY;
             eyeY -= (i/50);
         }
         
-        
-    
     if(result == 1){
         i = dirX - eyeX;
         eyeX += (i/50);
@@ -219,23 +219,10 @@ void Game::event(){
         i = dirY - eyeY;
         eyeY -= (i/50);
     }
-    
-       
+        
     SDL_WarpMouseInWindow(win, WIN_WIDTH/2 , WIN_HEIGHT/2);
     
-//    std::cout << "alpha dir : " << alphaDir << std::endl;
-//    std::cout << "cos(toRad(alphaDir)) : " << cos(toRad(alphaDir)) << std::endl;
-//    std::cout << "sin(toRad(alphaDir)) : " << sin(toRad(alphaDir)) << std::endl;
-//    std::cout << " dirX - eyeX : " << dirX - eyeX << std::endl;
-//    std::cout << " dirY - eyeY : " << dirY - eyeY << std::endl;
-//    
-//    std::cout << "dirX : " << dirX << ".  dirY :" << dirY<< ".  dirZ :" << dirZ << std::endl;
-
-
 }
-
-
-
 
 float Game::toRad(int deg){
     

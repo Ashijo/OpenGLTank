@@ -25,6 +25,7 @@
 #include "Cube.h"
 #include "Cone.h"
 #include <math.h>
+#include "sdlglutils.h"
 
 class Game {
 public:
@@ -45,6 +46,7 @@ private:
     
     void event();
     const Uint8* states;
+    GLuint idTest[6];
     
     float toRad(int deg);
     double toDeg(float rad);

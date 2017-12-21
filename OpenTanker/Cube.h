@@ -25,6 +25,8 @@ public:
     virtual ~Cube();
     void render();
     Cube(GLubyte r,GLubyte g,GLubyte b);
+    Cube(GLuint idTexture);
+    Cube(GLuint idTexture[6]);
     
 private:
     GLuint idGPU;

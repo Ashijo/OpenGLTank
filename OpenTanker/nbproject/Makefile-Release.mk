@@ -38,7 +38,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Cone.o \
 	${OBJECTDIR}/Cube.o \
 	${OBJECTDIR}/Game.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/sdlglutils.o
 
 
 # C Compiler Flags
@@ -84,6 +85,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/sdlglutils.o: sdlglutils.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sdlglutils.o sdlglutils.cpp
 
 # Subprojects
 .build-subprojects:

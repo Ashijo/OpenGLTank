@@ -65,9 +65,13 @@ void Game::Start() {
         glLoadIdentity();
         
         
+//        glTranslated(eyeX, eyeY, eyeZ);
+//        gluLookAt(0.0, 0.0, 0.0, dirX, dirY, dirZ, 0, 0, 1);
+//        glLoadIdentity();
         
         gluLookAt(eyeX, eyeY, eyeZ, dirX, dirY, dirZ, 0, 0, 1);
-        //gluLookAt(10, 10, 25, x, y, 0, 0, 0, 1);
+
+        
 
         glScaled(100,100,1);
         c->render();
@@ -103,71 +107,129 @@ void Game::Free() {
 
 
 void Game::event(){
+    // innitialisationd des variables
+    float i = 0.0;
+    int alphaLateral = 0;
+    double dirXLateral = 0.0;
+    double dirYLateral = 0.0;
+    int x = 0;
+    int y = 0;
+    Uint32 result;
     
+    //prise des coordonnées de la sourie
+    result = SDL_GetMouseState(&x,&y);
+    
+    //coordonées sourie au centre de l'écran
+    x -= WIN_WIDTH/2;
+    y -= WIN_HEIGHT/2;
+    
+    
+    //on applique les changement de direction
+    if (y < -1){
+        dirZ++;
+    }
+    if (y > 1){
+        dirZ--;
+    }
+    if (x < -1){
+        alphaDir-=10;
+    }
+    if (x > 1){
+        alphaDir+=10;
+    }
+    
+    //calcul de la direction du regard
+    dirX = eyeX + toDeg(sin(toRad(alphaDir)))*2;
+    dirY = eyeY + toDeg(cos(toRad(alphaDir)))*2;
+    
+    
+    
+    //gestion des evenements clavier
     SDL_Event event;
     SDL_PollEvent(&event);
         states = SDL_GetKeyboardState(NULL);
         if (event.type == SDL_QUIT || states[SDL_SCANCODE_ESCAPE])
             isRunning = false;
-        if(states[SDL_SCANCODE_W])
-            eyeX--;
-        if(states[SDL_SCANCODE_S])
-            eyeX++;
-        if(states[SDL_SCANCODE_A])
-            eyeY--;
-        if(states[SDL_SCANCODE_D])
-            eyeY++;
-        
-        
-    int x = 0;
-    int y = 0;
-    Uint32 result;
-    
-    result = SDL_GetMouseState(&x,&y);
-    
-    x -= WIN_WIDTH/2;
-    y -= WIN_HEIGHT/2;
-    
-    if (y < -3){
-        dirZ++;
-    }
-    if (y > 3){
-        dirZ--;
-    }
-    
-    if (x < -3){
-        alphaDir++;
-    }
-    if (x > 3){
-        alphaDir--;
-    }
-    
-    dirX = toDeg(sin(toRad(alphaDir))) * 30;
-    dirY = toDeg(cos(toRad(alphaDir))) * 30;
+        if(states[SDL_SCANCODE_W]){
+            //vers l'avant
+             i = dirX - eyeX;
+            eyeX += (i/50);
+            i = dirY - eyeY;
+            eyeY += (i/50);
+        }
+        if(states[SDL_SCANCODE_S]){
+            //vers l'arriere
+            i = dirX - eyeX;
+            eyeX -= (i/50);
+            i = dirY - eyeY;
+            eyeY -= (i/50);
+        }
+        if(states[SDL_SCANCODE_A]){
+            //lateral gauche
+            alphaLateral = alphaDir + 90;
+            dirXLateral = eyeX + toDeg(sin(toRad(alphaLateral)))*2;
+            dirYLateral = eyeY + toDeg(cos(toRad(alphaLateral)))*2;
             
-//    if (toDeg(sin(toRad(alphaDir))) > 0){
-//        dirX ++;
-//    }
-//    if (toDeg(sin(toRad(alphaDir))) < 0){
-//        dirX --;
-//    }
-//    if (toDeg(cos(toRad(x)))>0){
-//        dirY ++;
-//    }
-//    if (toDeg(cos(toRad(x)))<0){
-//        dirY --;
-//    }
+            std::cout << "alpha dir : " << alphaDir << std::endl;
+            std::cout << "alphaLateral : " << alphaLateral << std::endl;
+            std::cout << "cos(toRad(alphaB)) : " << cos(toRad(alphaLateral)) << std::endl;
+            std::cout << "sin(toRad(alphaB)) : " << sin(toRad(alphaLateral)) << std::endl;
+            std::cout << " dirX - eyeX : " << dirXLateral - eyeX << std::endl;
+            std::cout << " dirY - eyeY : " << dirYLateral - eyeY << std::endl;
+            std::cout << "dirX : " << dirXLateral << ".  dirY :" << dirYLateral<< ".  dirZ :" << dirZ << std::endl;
+
+            
+            i = dirXLateral - eyeX;
+            eyeX -= (i/50);
+            i = dirYLateral - eyeY;
+            eyeY -= (i/50);
+        }
+        if(states[SDL_SCANCODE_D]){
+            alphaLateral = alphaDir - 90 ;
+            dirXLateral = eyeX + toDeg(sin(toRad(alphaLateral)))*2;
+            dirYLateral = eyeY + toDeg(cos(toRad(alphaLateral)))*2;
+            
+//            std::cout << "alpha dir : " << alphaDir << std::endl;
+//            std::cout << "alpha B : " << alphaB << std::endl;
+//            std::cout << "cos(toRad(alphaB)) : " << cos(toRad(alphaB)) << std::endl;
+//            std::cout << "sin(toRad(alphaB)) : " << sin(toRad(alphaB)) << std::endl;
+//            std::cout << " dirX - eyeX : " << dirX - eyeX << std::endl;
+//            std::cout << " dirY - eyeY : " << dirY - eyeY << std::endl;
+//            std::cout << "dirX : " << dirX << ".  dirY :" << dirY<< ".  dirZ :" << dirZ << std::endl;
+
+            
+            
+            i = dirXLateral - eyeX;
+            eyeX -= (i/50);
+            i = dirYLateral - eyeY;
+            eyeY -= (i/50);
+        }
+        
+        
     
-    //dirX = toDeg(cos(toRad(alphaDir)))*30;
-    //dirY = toDeg(sin(toRad(alphaDir)))*30;
+    if(result == 1){
+        i = dirX - eyeX;
+        eyeX += (i/50);
+        i = dirY - eyeY;
+        eyeY += (i/50);
+    }
+    if(result == 4){
+        i = dirX - eyeX;
+        eyeX -= (i/50);
+        i = dirY - eyeY;
+        eyeY -= (i/50);
+    }
     
+       
     SDL_WarpMouseInWindow(win, WIN_WIDTH/2 , WIN_HEIGHT/2);
     
-    std::cout << "alpha dir : " << alphaDir << std::endl;
-    std::cout << "toRad(alphaDir) : " << toRad(alphaDir) << std::endl;
-    std::cout << "cos(toRad(alphaDir)) : " << cos(toRad(alphaDir)) << std::endl;
-    std::cout << "dirX : " << dirX << ".  dirY :" << dirY << std::endl;
-    //std::cout << "  Result : " << result << "     " << std::endl;
+//    std::cout << "alpha dir : " << alphaDir << std::endl;
+//    std::cout << "cos(toRad(alphaDir)) : " << cos(toRad(alphaDir)) << std::endl;
+//    std::cout << "sin(toRad(alphaDir)) : " << sin(toRad(alphaDir)) << std::endl;
+//    std::cout << " dirX - eyeX : " << dirX - eyeX << std::endl;
+//    std::cout << " dirY - eyeY : " << dirY - eyeY << std::endl;
+//    
+//    std::cout << "dirX : " << dirX << ".  dirY :" << dirY<< ".  dirZ :" << dirZ << std::endl;
 
 
 }
@@ -182,6 +244,7 @@ float Game::toRad(int deg){
 }
 
  double Game::toDeg(float rad){
- 
-    return rad*180/3.14159265358979323846;
+     
+    double r = rad*180/3.14159265358979323846;
+    return r;
  };

@@ -37,6 +37,7 @@ private:
     SDL_GLContext ctx;
     bool isRunning;
     Cube* c = NULL;
+    Cube* skybox = NULL;
     Cone* cone = NULL;
     
     double eyeX, eyeY, eyeZ, dirX, dirY, dirZ;

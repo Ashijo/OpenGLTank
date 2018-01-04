@@ -26,3 +26,5 @@
 *.exe
 *.out
 *.app
+/OpenTanker/build/
+/OpenTanker/dist/

@@ -4,7 +4,11 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Cone.h</itemPath>
+      <itemPath>Constantes.h</itemPath>
       <itemPath>Cube.h</itemPath>
+      <itemPath>Game.h</itemPath>
+      <itemPath>sdlglutils.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -13,8 +17,11 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Cone.cpp</itemPath>
       <itemPath>Cube.cpp</itemPath>
+      <itemPath>Game.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
+      <itemPath>sdlglutils.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -44,11 +51,25 @@
           <commandLine>-lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_gfx -lGL -lGLU</commandLine>
         </linkerTool>
       </compileType>
+      <item path="Cone.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Cone.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Constantes.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Cube.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Cube.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="sdlglutils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="sdlglutils.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -72,11 +93,25 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Cone.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Cone.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Constantes.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Cube.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Cube.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="sdlglutils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="sdlglutils.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

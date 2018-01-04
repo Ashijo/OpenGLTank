@@ -12,6 +12,7 @@
  */
 
 #include "Game.h"
+//#include <math.h>
 
 void Game::Init() {
 
@@ -41,19 +42,26 @@ void Game::Init() {
     std::string skyBack = "textures/skybox/front.jpg";
     std::string skyUp = "textures/skybox/up.jpg";
     
-    idTest[0] = loadTexture(skyDown.c_str());
-    idTest[1] = loadTexture(skyLeft.c_str());
-    idTest[2] = loadTexture(skyFront.c_str());
-    idTest[3] = loadTexture(skyRight.c_str());
-    idTest[4] = loadTexture(skyBack.c_str());
-    idTest[5] = loadTexture(skyUp.c_str());
+    std::string arnUpTop = "textures/sand.jpg";
+    std::string arnSide = "textures/brick.jpg";
     
-    c = new Cube(idTest);
+    imgSkybox[0] = loadTexture(skyDown.c_str());
+    imgSkybox[1] = loadTexture(skyBack.c_str());
+    imgSkybox[2] = loadTexture(skyRight.c_str());
+    imgSkybox[3] = loadTexture(skyFront.c_str());
+    imgSkybox[4] = loadTexture(skyLeft.c_str());
+    imgSkybox[5] = loadTexture(skyUp.c_str());
+    
+    imgArn[0] = loadTexture(arnUpTop.c_str());
+    imgArn[1] = loadTexture(arnSide.c_str());
+    
+    skybox = new Cube(imgSkybox);
+    arene = new Cube(imgArn, true);
     cone = new Cone();
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(70, (double) WIN_WIDTH / WIN_HEIGHT, 1, 1000);
+    gluPerspective(70, (double) WIN_WIDTH / WIN_HEIGHT, 1, 10000);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
 
@@ -78,17 +86,21 @@ void Game::Start() {
         glLoadIdentity();
         
         
-//        glTranslated(eyeX, eyeY, eyeZ);
-//        gluLookAt(0.0, 0.0, 0.0, dirX, dirY, dirZ, 0, 0, 1);
-//        glLoadIdentity();
-        
         gluLookAt(eyeX, eyeY, eyeZ, dirX, dirY, dirZ, 0, 0, 1);
 
         
-
-        glScaled(200,200,200);
-        c->render();
         
+        
+        //arene
+        glScaled(700,700,10);
+        arene->render();
+        glLoadIdentity();
+        
+        
+        
+        //skybox
+        glScaled(100,100,100);
+        skybox->render();
         glLoadIdentity();
         
         //glColor3ub(255,0,255);
@@ -105,13 +117,12 @@ void Game::Start() {
 
     }
 
-
-
 }
 
 void Game::Free() {
-
-    glDeleteTextures(6, idTest);
+    
+    glDeleteTextures(2, imgArn);
+    glDeleteTextures(6, imgSkybox);
     SDL_GL_DeleteContext(ctx);
     SDL_DestroyWindow(win);
     IMG_Quit();
@@ -180,8 +191,8 @@ void Game::event(){
         if(states[SDL_SCANCODE_A]){
             //lateral gauche
             alphaLateral = alphaDir + 90;
-            dirXLateral = eyeX + toDeg(sin(toRad(alphaLateral)))*2;
-            dirYLateral = eyeY + toDeg(cos(toRad(alphaLateral)))*2;
+            dirXLateral = eyeX + toDeg(sin(toRad(alphaLateral)));
+            dirYLateral = eyeY + toDeg(cos(toRad(alphaLateral)));
             
 //            std::cout << "alpha dir : " << alphaDir << std::endl;
 //            std::cout << "alphaLateral : " << alphaLateral << std::endl;
@@ -192,9 +203,9 @@ void Game::event(){
 //            std::cout << "dirX : " << dirXLateral << ".  dirY :" << dirYLateral<< ".  dirZ :" << dirZ << std::endl;
             
             i = dirXLateral - eyeX;
-            eyeX -= (i/50);
+            eyeX += (i/50);
             i = dirYLateral - eyeY;
-            eyeY -= (i/50);
+            eyeY += (i/50);
         }
         if(states[SDL_SCANCODE_D]){
             alphaLateral = alphaDir - 90 ;
@@ -206,6 +217,17 @@ void Game::event(){
             i = dirYLateral - eyeY;
             eyeY -= (i/50);
         }
+        if (states[SDL_SCANCODE_SPACE]){
+        
+            eyeZ += 10;
+        
+        }
+        
+        if (eyeZ > 30){
+        
+            eyeZ--;
+        }
+        
         
     if(result == 1){
         i = dirX - eyeX;
@@ -226,12 +248,12 @@ void Game::event(){
 
 float Game::toRad(int deg){
     
-    float r = (float)deg/180/3.14159265358979323846;
+    float r = (float)deg/180/PI;
     return  r;
 }
 
  double Game::toDeg(float rad){
      
-    double r = rad*180/3.14159265358979323846;
+    double r = (double)rad*180/PI;
     return r;
  };

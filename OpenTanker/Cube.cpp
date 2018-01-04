@@ -236,35 +236,35 @@ Cube::Cube(GLuint idTexture[6]){
     glBegin(GL_QUADS);
         glTexCoord2d(0, 0);
         glVertex3i( -1, -1, 0);
-        glTexCoord2d(0, 1);
+        glTexCoord2d(0, 100);
         glVertex3i( -1, 1, 0);
-        glTexCoord2d(1, 1);
+        glTexCoord2d(100, 100);
         glVertex3i( 1, 1, 0);
-        glTexCoord2d(1, 0);
+        glTexCoord2d(100, 0);
         glVertex3i( 1, -1, 0);
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, idTexture[1]);
     glBegin(GL_QUADS);
-        glTexCoord2d(1, 0);
-        glVertex3i( 1, -1, 0);
-        glTexCoord2d(1, 1);
-        glVertex3i( 1, -1, 2);
-        glTexCoord2d(0, 1);
-        glVertex3i( 1, 1, 2);
         glTexCoord2d(0, 0);
+        glVertex3i( 1, -1, 0);
+        glTexCoord2d(0, 1);
+        glVertex3i( 1, -1, 2);
+        glTexCoord2d(1, 1);
+        glVertex3i( 1, 1, 2);
+        glTexCoord2d(1, 0);
         glVertex3i( 1, 1, 0);
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, idTexture[2]);
     glBegin(GL_QUADS);
-        glTexCoord2d(0, 0);
-        glVertex3i( 1,-1, 0);
-        glTexCoord2d(0, 1);
-        glVertex3i( 1,-1, 2);
-        glTexCoord2d(1, 1);
-        glVertex3i( -1,-1, 2);
         glTexCoord2d(1, 0);
+        glVertex3i( 1,-1, 0);
+        glTexCoord2d(1, 1);
+        glVertex3i( 1,-1, 2);
+        glTexCoord2d(0, 1);
+        glVertex3i( -1,-1, 2);
+        glTexCoord2d(0, 0);
         glVertex3i( -1,-1, 0);
     glEnd();
         
@@ -301,6 +301,92 @@ Cube::Cube(GLuint idTexture[6]){
         glTexCoord2d(1, 1);
         glVertex3i( 1, 1, 2);
         glTexCoord2d(1, 0);
+        glVertex3i( 1, -1, 2);
+    glEnd();
+
+    glEndList();
+
+};
+
+Cube::Cube(GLuint idTexture[2], bool i){
+
+    //idTexture[0] = down & up
+    //idTexture[1] = left & right & forward & back
+    
+    
+    idGPU = glGenLists(1);
+    glNewList(idGPU, GL_COMPILE);
+    glColor3ub(255, 255, 255);
+    
+    glBindTexture(GL_TEXTURE_2D, idTexture[0]);
+    glBegin(GL_QUADS);
+        glTexCoord2d(0, 0);
+        glVertex3i( -1, -1, 0);
+        glTexCoord2d(0, 100);
+        glVertex3i( -1, 1, 0);
+        glTexCoord2d(100, 100);
+        glVertex3i( 1, 1, 0);
+        glTexCoord2d(100, 0);
+        glVertex3i( 1, -1, 0);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, idTexture[1]);
+    glBegin(GL_QUADS);
+        glTexCoord2d(0, 0);
+        glVertex3i( 1, -1, 0);
+        glTexCoord2d(0, 10);
+        glVertex3i( 1, -1, 2);
+        glTexCoord2d(700, 10);
+        glVertex3i( 1, 1, 2);
+        glTexCoord2d(700, 0);
+        glVertex3i( 1, 1, 0);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, idTexture[1]);
+    glBegin(GL_QUADS);
+        glTexCoord2d(700, 0);
+        glVertex3i( 1,-1, 0);
+        glTexCoord2d(700, 10);
+        glVertex3i( 1,-1, 2);
+        glTexCoord2d(0, 10);
+        glVertex3i( -1,-1, 2);
+        glTexCoord2d(0, 0);
+        glVertex3i( -1,-1, 0);
+    glEnd();
+        
+    glBindTexture(GL_TEXTURE_2D, idTexture[1]);
+    glBegin(GL_QUADS);
+        glTexCoord2d(0, 0);
+        glVertex3i( -1, -1, 0);
+        glTexCoord2d(0, 10);
+        glVertex3i( -1, -1, 2);
+        glTexCoord2d(700, 10);
+        glVertex3i( -1, 1, 2);
+        glTexCoord2d(700, 0);
+        glVertex3i( -1, 1, 0);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, idTexture[1]);
+    glBegin(GL_QUADS);
+        glTexCoord2d(700, 0);
+        glVertex3i( 1, 1, 0);
+        glTexCoord2d(700, 10);
+        glVertex3i( 1, 1, 2);
+        glTexCoord2d(0, 10);
+        glVertex3i( -1, 1, 2);
+        glTexCoord2d(0, 0);
+        glVertex3i( -1, 1, 0);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, idTexture[0]);
+    glBegin(GL_QUADS);
+        glTexCoord2d(0, 0);
+        glVertex3i( -1, -1, 2);
+        glTexCoord2d(0, 100);
+        glVertex3i( -1, 1, 2);
+        glTexCoord2d(100, 100);
+        glVertex3i( 1, 1, 2);
+        glTexCoord2d(100, 0);
         glVertex3i( 1, -1, 2);
     glEnd();
 

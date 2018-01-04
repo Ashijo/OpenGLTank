@@ -27,6 +27,7 @@ public:
     Cube(GLubyte r,GLubyte g,GLubyte b);
     Cube(GLuint idTexture);
     Cube(GLuint idTexture[6]);
+    Cube(GLuint idTexture[2], bool i);
     
 private:
     GLuint idGPU;

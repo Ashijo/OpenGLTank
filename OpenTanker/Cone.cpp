@@ -27,9 +27,5 @@ Cone::~Cone() {
 }
 
 void Cone::render(){
-
     gluCylinder(params,10,1,15,25,25);
-
-
-
 }

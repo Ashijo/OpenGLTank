@@ -25,7 +25,6 @@ public:
     void render();
 private:
     GLUquadric* params;
-
 };
 
 #endif /* CONE_H */

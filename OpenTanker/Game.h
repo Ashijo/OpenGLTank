@@ -39,6 +39,7 @@ private:
     bool isRunning;
     Cube* c = NULL;
     Cube* skybox = NULL;
+    Cube* arene = NULL;
     Cone* cone = NULL;
     
     double eyeX, eyeY, eyeZ, dirX, dirY, dirZ;
@@ -46,7 +47,8 @@ private:
     
     void event();
     const Uint8* states;
-    GLuint idTest[6];
+    GLuint imgSkybox[6];
+    GLuint imgArn[2];
     
     float toRad(int deg);
     double toDeg(float rad);

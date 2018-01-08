@@ -22,3 +22,10 @@ Shoot::Shoot(const Shoot& orig) {
 Shoot::~Shoot() {
 }
 
+Shoot::Shoot(Line direction){
+
+    int a,b;
+    
+    a = direction.getA();
+};
+

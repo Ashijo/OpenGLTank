@@ -61,9 +61,11 @@ void Cylinder::render(double anglX,double anglY,double anglZ){
     
     
     glTranslated(position.getX(),position.getY(), position.getZ());
-    glRotated(anglX,1,0,0);
-    glRotated(anglY,0,1,0);
+    
     glRotated(anglZ,0,0,1);
+    glRotated(anglY,0,1,0);
+    glRotated(anglX,1,0,0);
+    
     glScaled(size.getX(), size.getY(), size.getZ());
 
     

@@ -20,12 +20,15 @@ class Shoot {
 public:
     Shoot();
     Shoot(const Shoot& orig);
+    Shoot(Line direction);
     virtual ~Shoot();
     void render();
+    int getAngle();
     
 private:
     Line direction;
-    int tick, speed;
+    Game* ctx = NULL;
+    int angle;
     
     
 };

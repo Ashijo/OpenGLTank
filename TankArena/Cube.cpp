@@ -99,7 +99,24 @@ void Cube::render(){
 }
 
 
-
+void Cube::render(int angle){
+    
+    glPushMatrix();
+    
+    
+    
+    glTranslated(position.getX(),position.getY(), position.getZ());
+    
+    glScaled(size.getX(),size.getY(),size.getZ());
+    
+    glRotated(angle,0,0,1);
+    
+    glCallList(idGPU);
+   
+    
+    glPopMatrix();
+    
+}
 
 
 
@@ -170,31 +187,31 @@ Cube::Cube(GLuint idTexture, Point pos, Point size):Rendable(pos, size){
     glBegin(GL_QUADS);
         glTexCoord2d(0, 0);
         glVertex3i( -1, -1, 0);
-        glTexCoord2d(0, 10);
+        glTexCoord2d(0, 1);
         glVertex3i( -1, 1, 0);
-        glTexCoord2d(10, 10);
+        glTexCoord2d(1, 1);
         glVertex3i( 1, 1, 0);
-        glTexCoord2d(10, 0);
+        glTexCoord2d(1, 0);
         glVertex3i( 1, -1, 0);
     glEnd();
 
     glBegin(GL_QUADS);
         glTexCoord2d(0, 0);
         glVertex3i( 1, -1, 0);
-        glTexCoord2d(0, 10);
+        glTexCoord2d(0, 1);
         glVertex3i( 1, -1, 2);
-        glTexCoord2d(10, 10);
+        glTexCoord2d(1, 1);
         glVertex3i( 1, 1, 2);
-        glTexCoord2d(10, 0);
+        glTexCoord2d(1, 0);
         glVertex3i( 1, 1, 0);
     glEnd();
 
     glBegin(GL_QUADS);
-        glTexCoord2d(10, 0);
+        glTexCoord2d(1, 0);
         glVertex3i( 1,-1, 0);
-        glTexCoord2d(10, 10);
+        glTexCoord2d(1, 1);
         glVertex3i( 1,-1, 2);
-        glTexCoord2d(0, 10);
+        glTexCoord2d(0, 1);
         glVertex3i( -1,-1, 2);
         glTexCoord2d(0, 0);
         glVertex3i( -1,-1, 0);
@@ -203,20 +220,20 @@ Cube::Cube(GLuint idTexture, Point pos, Point size):Rendable(pos, size){
     glBegin(GL_QUADS);
         glTexCoord2d(0, 0);
         glVertex3i( -1, -1, 0);
-        glTexCoord2d(0, 10);
+        glTexCoord2d(0, 1);
         glVertex3i( -1, -1, 2);
-        glTexCoord2d(10, 10);
+        glTexCoord2d(1, 1);
         glVertex3i( -1, 1, 2);
-        glTexCoord2d(10, 0);
+        glTexCoord2d(1, 0);
         glVertex3i( -1, 1, 0);
     glEnd();
 
     glBegin(GL_QUADS);
-        glTexCoord2d(10, 0);
+        glTexCoord2d(1, 0);
         glVertex3i( 1, 1, 0);
-        glTexCoord2d(10, 10);
+        glTexCoord2d(1, 1);
         glVertex3i( 1, 1, 2);
-        glTexCoord2d(0, 10);
+        glTexCoord2d(0, 1);
         glVertex3i( -1, 1, 2);
         glTexCoord2d(0, 0);
         glVertex3i( -1, 1, 0);
@@ -225,11 +242,11 @@ Cube::Cube(GLuint idTexture, Point pos, Point size):Rendable(pos, size){
     glBegin(GL_QUADS);
         glTexCoord2d(0, 0);
         glVertex3i( -1, -1, 2);
-        glTexCoord2d(0, 10);
+        glTexCoord2d(0, 1);
         glVertex3i( -1, 1, 2);
-        glTexCoord2d(10, 10);
+        glTexCoord2d(1, 1);
         glVertex3i( 1, 1, 2);
-        glTexCoord2d(10, 0);
+        glTexCoord2d(1, 0);
         glVertex3i( 1, -1, 2);
     glEnd();
 

@@ -25,11 +25,11 @@ void Game::init(){
     //pos de base (temporaire, pour debug)
     dirX = 10;
     dirY = 10;
-    dirZ = 25;
+    dirZ = 1;
     
     eyeX = 40;
     eyeY = 40;
-    eyeZ = 50;
+    eyeZ = 200;
     
     initMatrix();
     initTextures(); 
@@ -80,6 +80,28 @@ void Game::free(){
     SDL_Quit();
 }
 
+Tank* Game::getEnemyPtr(int ref){
+    Tank* respons;
+    
+    if (ref == 1){
+    
+        respons = tank1;
+        
+    }
+    if (ref == 0){
+    
+        respons = tank2;
+    
+    }
+    
+    return respons;
+}
+
+int Game::getTick(){
+
+    return tick;
+
+}
 
 void Game::initSDL(){
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -135,15 +157,16 @@ void Game::initModels(){
     Point pos, size;
     
     pos.setXYZ(1,1,1);
-    size.setXYZ(400,400,400);
+    size.setXYZ(SKYBOX_SIZE,SKYBOX_SIZE,SKYBOX_SIZE);
     skybox = new Cube(imgSkybox, 6,pos, size);
     pos.setXYZ(2,2,1);
-    size.setXYZ(300,300,10);
+    size.setXYZ(ARN_SIZE,ARN_SIZE,10);
     arene = new Cube(imgArn, 2, pos, size);
     
-    pos.setXYZ(2,2,20);
-    size.setXYZ(30,30,100);
-    test = new Tank(this, imgTnk[0], pos);
+    pos.setXYZ(ARN_SIZE * -1 / 10 ,2,20);
+    tank1 = new Tank(this, imgTnk[0], pos);
+    pos.setXYZ(ARN_SIZE / 10 ,2,20);
+    tank2 = new Tank(this, imgTnk[1], pos);
     
     //pos.setXYZ(100,100,20);
     //sphere = new Sphere(imgTnk[2], pos, 5);
@@ -186,21 +209,21 @@ void Game::event(){
     
     //on applique les changement de direction
     if (y < -1){
-        dirZ++;
+        dirZ+= 0.1;
     }
     if (y > 1){
-        dirZ--;
+        dirZ-= 0.1;
     }
     if (x < -1){
-        alphaDir-=20;
+        alphaDir+=2;
     }
     if (x > 1){
-        alphaDir+=20;
+        alphaDir-=2;
     }
     
     //calcul de la direction du regard
-    dirX = eyeX + toDeg(sin(toRad(alphaDir)));
-    dirY = eyeY + toDeg(cos(toRad(alphaDir)));
+    dirY = eyeY + sin(alphaDir * TO_RAD);
+    dirX = eyeX + cos(alphaDir * TO_RAD);
     
     //gestion des evenements clavier
     SDL_Event event;
@@ -209,59 +232,33 @@ void Game::event(){
         if (event.type == SDL_QUIT || states[SDL_SCANCODE_ESCAPE])
             isRunning = false;
         if(states[SDL_SCANCODE_W]){
-            //vers l'avant
-            i = dirX - eyeX;
-            eyeX += (i/50);
-            i = dirY - eyeY;
-            eyeY += (i/50);
+            tank2->avancer();
         }
         if(states[SDL_SCANCODE_S]){
-            //vers l'arriere
-            i = dirX - eyeX;
-            eyeX -= (i/50);
-            i = dirY - eyeY;
-            eyeY -= (i/50);
+            tank2->reculer();
         }
-        
+        if(states[SDL_SCANCODE_A]){
+            tank2->mooveLeft();
+        }
+        if(states[SDL_SCANCODE_D]){
+            tank2->mooveRight();
+        }
         if(states[SDL_SCANCODE_UP]){
-            //vers l'avant
-            i = dirX - eyeX;
-            eyeX += (i/50);
-            i = dirY - eyeY;
-            eyeY += (i/50);
+            tank1->avancer();
         }
         if(states[SDL_SCANCODE_DOWN]){
-            //vers l'arriere
-            i = dirX - eyeX;
-            eyeX -= (i/50);
-            i = dirY - eyeY;
-            eyeY -= (i/50);
+            tank1->reculer();
+        }
+        if(states[SDL_SCANCODE_LEFT]){
+            tank1->mooveLeft();
+        }
+        if(states[SDL_SCANCODE_RIGHT]){
+            tank1->mooveRight();
         }
         
-       
-        if (states[SDL_SCANCODE_SPACE]){
-            eyeZ += 10;
-        }
-        
-        if (eyeZ > 30){
-            eyeZ-= 5;
-        }
-        
-        
-    if(result == 1){
-        i = dirX - eyeX;
-        eyeX += (i/50);
-        i = dirY - eyeY;
-        eyeY += (i/50);
-    }
-    if(result == 4){
-        i = dirX - eyeX;
-        eyeX -= (i/50);
-        i = dirY - eyeY;
-        eyeY -= (i/50);
-    }
         
     SDL_WarpMouseInWindow(win, WIN_WIDTH/2 , WIN_HEIGHT/2);
+    tick++;
     
 }
 
@@ -272,21 +269,10 @@ void Game::drawModels(){
     
     skybox->render();
     
-    test->render();
+    tank1->render();
+    tank2->render();
     
     //sphere->render();
     
     
 }
-
-float Game::toRad(int deg){
-    
-    float r = (float)deg/180/PI;
-    return r;
-}
-
- double Game::toDeg(float rad){
-     
-    double r = (double)rad*180/PI;
-    return r;
- };

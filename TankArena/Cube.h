@@ -25,6 +25,7 @@ public:
     Cube();
     virtual ~Cube();
     void render();
+    void render(int angle);
     Cube(GLubyte r,GLubyte g,GLubyte b, Point pos, Point size);
     Cube(GLuint idTexture, Point pos, Point size);
     Cube(GLuint idTexture[],int nbText ,Point pos, Point size);

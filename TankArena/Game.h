@@ -40,7 +40,8 @@ public:
     void start();
     void free();
     
-    
+    Tank* getEnemyPtr(int ref);
+    int getTick();
 private:
     
     // contextes
@@ -51,12 +52,14 @@ private:
     bool isRunning  = true;
     Cube* skybox    = NULL;
     Cube* arene     = NULL;
-    Tank* test      = NULL;
+    Tank* tank1      = NULL;
+    Tank* tank2      = NULL;
     //Sphere* sphere  = NULL;
     
     
     double eyeX, eyeY, eyeZ, dirX, dirY, dirZ;
     int alphaDir = 0;
+    int tick = 0;
     
     const Uint8* states;
     GLuint imgSkybox[6];
@@ -76,10 +79,6 @@ private:
     void drawModels();
     
     
-    //methodes utils
-    float toRad(int deg);
-    double toDeg(float rad);
-
 };
 
 #endif /* GAME_H */

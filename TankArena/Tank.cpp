@@ -22,30 +22,116 @@ Tank::Tank(const Tank& orig) {
 Tank::~Tank() {
 }
 
+int Tank::nbTank = 0;
+
 Tank::Tank(Game* ctx, GLuint idText, Point pos){
 
     this->ctx = ctx;
     this->idText = idText;
     this->pos = pos;
     
-    Point size(10,10,10);
+    size.setXYZ(3,3,20);
+    posCanon.setXYZ(pos.getX(), pos.getY(), pos.getZ() + size.getZ() / 2);
+    canon = new Cylinder(idText, posCanon, size);
     
+    size.setXYZ(10,10,10);
     body = new Cube(idText, pos, size);
     
-    size.setXYZ(3,3,25);
-    posCanon.setXYZ(pos.getX(), pos.getY(), pos.getZ() + size.getZ() / 2);
+    ref = nbTank;
+    nbTank++;
     
-    canon = new Cylinder(idText, posCanon, size);
+    if (ref == 0){
+        dirAngle = 0;
+    }else{
+        dirAngle = 180;
+    }
     
 }
 
 void Tank::render(){
-
-    body->render();
-    canon->render(90,0,0);
+    glPushMatrix();
+    
+    
+    body->render(dirAngle);
+    canon->render(90,0,dirAngle);
+    
+    glPopMatrix();
+    
     
 };
-void Tank::checkCol(){};
+
+Tank* Tank::getTankPtr(){
+    return this;
+}
+
+bool Tank::checkCol(int x, int y){
+    bool respons = false;
     
+    int enX, enY, myX, myY, sizeX, sizeY;
+    ctx->getEnemyPtr(ref)->getPos().getXY(&enX, &enY);
+    pos.getXY(&myX, &myY);
+    size.getXY(&sizeX, &sizeY);
+    myX += x;
+    myY += y;
+    
+    if(
+            myX-sizeX >= enX+sizeX ||
+            myX+sizeX <= enX-sizeX ||
+            myY-sizeY >= enY+sizeY ||
+            myY+sizeY <= enY-sizeY 
+            
+        ){
+        respons = true;
+    }
+    
+    return respons;
+
+};
+    
+Point Tank::getPos(){
+    return pos;
+}
+
+void Tank::avancer(){
+    int x,y, mX, mY;
+    pos.getXY(&x,&y);
+    
+    mY = SPEED* sin(TO_RAD * (dirAngle-90));
+    mX = SPEED* cos(TO_RAD * (dirAngle-90));
+    
+    if(checkCol(mX, mY)){
+    pos.setXY(x + mX,y + mY);
+    updatePos();
+    }
+}
+    
+ void Tank::reculer(){
+ int x,y;
+    
+    pos.getXY(&x,&y);
+ 
+    y -= SPEED* sin(TO_RAD * (dirAngle-90));
+    x -= SPEED* cos(TO_RAD * (dirAngle-90));
+    
+    pos.setXY(x,y);
+    updatePos();
+ 
+ }   
+
+void Tank::updatePos(){
+    int x,y;
+    
+    pos.getXY(&x,&y);
+    body->setPos(x,y);
+    canon->setPos(x,y);
+}
+
 void Tank::shoot(){};
 void Tank::isShooted(){};
+
+void Tank::mooveRight(){
+    dirAngle -=3;
+}
+void Tank::mooveLeft(){
+    dirAngle +=3;
+}

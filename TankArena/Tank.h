@@ -16,6 +16,9 @@
 
 #include "Game.h"
 #include "Cylinder.h"
+#include "Constantes.h"
+#include <math.h>
+#include <iostream>
 
 class Game;
 class Tank {
@@ -26,27 +29,38 @@ public:
     Tank(Game *ctx ,GLuint idText, Point pos);
     
     void render();
-    void checkCol();
+    bool checkCol(int x, int y);
+    
+    void avancer();
+    void reculer();
     
     void shoot();
     void isShooted();
     
+    void mooveRight();
+    void mooveLeft();
+    
+    Tank* getTankPtr();
+    Point getPos();
     
 private:
     GLuint idText;
     GLuint idGPU;
     int hp = 10;
     
-    Point pos;
+    Point pos, size;
     Point posCanon;
     
+    int ref;
     
-    Game* ctx = NULL;
-    Cube* body = NULL;
-    Cylinder* canon = NULL;
+    Game*       ctx       = NULL;
+    Cube*       body      = NULL;
+    Cylinder*   canon     = NULL;
     
+    int dirAngle;
+    static int nbTank;
     
-    
+    void updatePos();
     
 };
 

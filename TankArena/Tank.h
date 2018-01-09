@@ -34,7 +34,7 @@ public:
     void avancer();
     void reculer();
     
-    void shoot();
+    bool shoot();
     void isShooted();
     
     void mooveRight();
@@ -43,10 +43,14 @@ public:
     Tank* getTankPtr();
     Point getPos();
     
+    void update();
+    int getDirection();
+    
 private:
     GLuint idText;
     GLuint idGPU;
     int hp = 10;
+    int delay = 0;
     
     Point pos, size;
     Point posCanon;

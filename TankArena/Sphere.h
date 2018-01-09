@@ -25,7 +25,9 @@ public:
     Sphere(const Sphere& orig);
     virtual ~Sphere();
     Sphere(GLuint idTexture, Point center, int r);
-
+    Point getPos();
+    
+    void setPos(int x, int y);
     void render();
 private:
     Point center;

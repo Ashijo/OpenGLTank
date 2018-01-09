@@ -19,6 +19,7 @@ const int WIN_HEIGHT = 1000;
 const int FPS = 60;
 const float PI = 3.14159265358979323846;
 const float SPEED = 3;
+const float BULLET_SPEED = 10;
 const double TO_RAD = PI / 180.0;
 const int ARN_SIZE = 700;
 const int SKYBOX_SIZE = 1000;

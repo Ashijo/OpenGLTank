@@ -30,3 +30,9 @@ Line::Line(Point a, Point b){
     
 };
 
+Point Line::getA(){
+    return a;
+}
+Point Line::getB(){
+    return b;
+}

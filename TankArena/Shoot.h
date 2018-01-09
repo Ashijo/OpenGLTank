@@ -15,21 +15,28 @@
 #define SHOOT_H
 
 #include "Line.h"
+#include "Game.h"
+#include "Sphere.h"
 
+class Tank;
 class Shoot {
 public:
     Shoot();
     Shoot(const Shoot& orig);
-    Shoot(Line direction);
+    Shoot(Point from, int angle ,GLuint idText, Tank* enemy);
+    
     virtual ~Shoot();
     void render();
+    void updatePos();
     int getAngle();
+    Point getPos();
+    bool checkCol();
     
 private:
-    Line direction;
-    Game* ctx = NULL;
     int angle;
-    
+    Sphere* body = NULL;
+    Tank* enemy;
+    bool exist = true;
     
 };
 

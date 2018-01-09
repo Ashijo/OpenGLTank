@@ -17,9 +17,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/androidlinux/Git/TankArena/Game.h</file>
+            <file>file:/home/androidlinux/Git/TankArena/Sphere.h</file>
             <file>file:/home/androidlinux/Git/TankArena/Shoot.cpp</file>
+            <file>file:/home/androidlinux/Git/TankArena/Line.h</file>
+            <file>file:/home/androidlinux/Git/TankArena/Line.cpp</file>
+            <file>file:/home/androidlinux/Git/TankArena/Tank.h</file>
             <file>file:/home/androidlinux/Git/TankArena/Shoot.h</file>
             <file>file:/home/androidlinux/Git/TankArena/Constantes.h</file>
+            <file>file:/home/androidlinux/Git/TankArena/Sphere.cpp</file>
+            <file>file:/home/androidlinux/Git/TankArena/Tank.cpp</file>
             <file>file:/home/androidlinux/Git/TankArena/Game.cpp</file>
         </group>
     </open-files>

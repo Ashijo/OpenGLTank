@@ -27,8 +27,11 @@
 #include "Cylinder.h"
 #include "Tank.h"
 #include "Sphere.h" 
+#include "vector"
+#include "Shoot.h"
 
 
+class Shoot;
 class Tank;
 class Cube;
 class Game {
@@ -42,6 +45,7 @@ public:
     
     Tank* getEnemyPtr(int ref);
     int getTick();
+    void endGame();
 private:
     
     // contextes
@@ -54,7 +58,7 @@ private:
     Cube* arene     = NULL;
     Tank* tank1      = NULL;
     Tank* tank2      = NULL;
-    //Sphere* sphere  = NULL;
+    std::vector <Shoot*> shoots;
     
     
     double eyeX, eyeY, eyeZ, dirX, dirY, dirZ;
@@ -76,6 +80,7 @@ private:
         //en jeu
     void cleaner();
     void event();
+    void updateModels();
     void drawModels();
     
     

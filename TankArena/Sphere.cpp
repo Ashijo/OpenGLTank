@@ -38,7 +38,7 @@ Sphere::Sphere(GLuint idTexture, Point center, int r){
         gluQuadricTexture(quadric, GL_TRUE);
 
     gluSphere(quadric, 1, 20, 20);
-
+    glEndList();
 
 
 }
@@ -53,4 +53,13 @@ void Sphere::render(){
      glScaled(r,r,r);
      glCallList(idList);
      glPopMatrix();
+}
+
+Point Sphere::getPos(){
+    return center;
+}
+
+
+void Sphere::setPos(int x, int y){
+    center.setXY(x, y);
 }

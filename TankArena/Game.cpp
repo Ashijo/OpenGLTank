@@ -50,6 +50,7 @@ void Game::start(){
         
         gluLookAt(eyeX, eyeY, eyeZ, dirX, dirY, dirZ, 0, 0, 1);
        
+        updateModels();
         drawModels();
 
         //mettre a jour l ecran
@@ -68,6 +69,13 @@ void Game::start(){
 
 void Game::free(){
     
+    
+    for (int i = 0; i < shoots.size(); i++){
+        shoots[i]->~Shoot();
+    }
+    
+    tank1->~Tank();
+    tank2->~Tank();
     skybox->~Cube();
     arene->~Cube();
 
@@ -168,9 +176,6 @@ void Game::initModels(){
     pos.setXYZ(ARN_SIZE / 10 ,2,20);
     tank2 = new Tank(this, imgTnk[1], pos);
     
-    //pos.setXYZ(100,100,20);
-    //sphere = new Sphere(imgTnk[2], pos, 5);
-    
 }
 
 void Game::initMatrix(){
@@ -243,6 +248,15 @@ void Game::event(){
         if(states[SDL_SCANCODE_D]){
             tank2->mooveRight();
         }
+        if(states[SDL_SCANCODE_Q]){
+            
+            if (tank2->shoot()){
+                Shoot* s = new Shoot(tank2->getPos(), tank2->getDirection(), imgTnk[2], tank1);
+                shoots.push_back(s);
+            }
+            
+        }
+        
         if(states[SDL_SCANCODE_UP]){
             tank1->avancer();
         }
@@ -255,12 +269,34 @@ void Game::event(){
         if(states[SDL_SCANCODE_RIGHT]){
             tank1->mooveRight();
         }
+        if(states[SDL_SCANCODE_RCTRL]){
+            if (tank1->shoot()){
+                Shoot* s = new Shoot(tank1->getPos(), tank1->getDirection(), imgTnk[2], tank2);
+                shoots.push_back(s);
+            }
         
+        }
         
     SDL_WarpMouseInWindow(win, WIN_WIDTH/2 , WIN_HEIGHT/2);
     tick++;
     
 }
+
+void Game::updateModels(){
+    
+    for (int i = 0; i < shoots.size(); i++){
+        shoots[i]->updatePos();
+        if(shoots[i]->checkCol()){
+        
+            shoots[i]->~Shoot();
+        
+        };
+    }
+    
+    tank1->update();
+    tank2->update();
+}
+
 
 void Game::drawModels(){
 
@@ -272,7 +308,13 @@ void Game::drawModels(){
     tank1->render();
     tank2->render();
     
-    //sphere->render();
+    for (int i = 0; i < shoots.size(); i++){
+        shoots[i]->render();
+    }
     
-    
+}
+
+
+void Game::endGame(){
+    isRunning = false;
 }

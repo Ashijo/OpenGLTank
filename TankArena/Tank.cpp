@@ -126,8 +126,28 @@ void Tank::updatePos(){
     canon->setPos(x,y);
 }
 
-void Tank::shoot(){};
-void Tank::isShooted(){};
+bool Tank::shoot(){
+
+    bool retour = false;
+    if (delay <= 0){
+        retour = true;
+        delay = 15;
+    } 
+
+    return retour;
+
+};
+void Tank::isShooted(){
+    std::cout<< "Tank " << ref << " is shooted" << std::endl;
+    
+    hp--;
+    std::cout << "hp left : " << hp << std::endl;
+    
+    if (hp <= 0 ){
+        ctx->endGame();
+    }
+    
+};
 
 void Tank::mooveRight(){
     dirAngle -=3;
@@ -135,3 +155,12 @@ void Tank::mooveRight(){
 void Tank::mooveLeft(){
     dirAngle +=3;
 }
+
+int Tank::getDirection(){
+    return dirAngle;
+}
+
+void Tank::update(){
+    delay--;
+}
+

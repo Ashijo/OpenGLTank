@@ -24,8 +24,16 @@ Shoot::~Shoot() {
 
 Shoot::Shoot(Line direction){
 
-    int a,b;
+    int xA, yA, xB, yB, xAB, yAB;
     
-    a = direction.getA();
+    direction.getA().getXY(&xA, &yA);
+    direction.getB().getXY(&xB, &yB);
+    
+    xAB = xB-xA;
+    yAB = yB-yA;
+    
+    this->direction = direction;
+    
+    
 };
 

@@ -23,13 +23,6 @@ void Game::init(){
     initSDL();
    
     //pos de base (temporaire, pour debug)
-    dirX = 10;
-    dirY = 10;
-    dirZ = 1;
-    
-    eyeX = 40;
-    eyeY = 40;
-    eyeZ = 200;
     
     initMatrix();
     initTextures(); 
@@ -46,12 +39,33 @@ void Game::start(){
         start = SDL_GetTicks();
 
         cleaner();
-        event();        
-        
-        gluLookAt(eyeX, eyeY, eyeZ, dirX, dirY, dirZ, 0, 0, 1);
-       
+        event();
         updateModels();
-        drawModels();
+        //viewport manager
+        if (first_person){
+            
+        
+            glViewport(1, 1, WIN_WIDTH / 2 -2, WIN_HEIGHT -2);
+            glLoadIdentity();
+            gluLookAt(tank1eyeX, tank1eyeY, tank1eyeZ, tank1dirX, tank1dirY, tank1dirZ, 0, 0, 1);
+            
+            drawModels();
+            
+            glViewport(WIN_WIDTH / 2 +1, 1, WIN_WIDTH / 2 -2, WIN_HEIGHT-2);
+            glLoadIdentity();
+            gluLookAt(tank2eyeX, tank2eyeY, tank2eyeZ, tank2dirX, tank2dirY, tank2dirZ, 0, 0, 1);
+
+            drawModels();
+            
+        } else {   
+            glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
+            glLoadIdentity();
+            gluLookAt(eyeX, eyeY, eyeZ, dirX, dirY, dirZ, 0, 0, 1);
+        
+            drawModels();
+            
+        }
+        
 
         //mettre a jour l ecran
         SDL_GL_SwapWindow(win);
@@ -64,6 +78,9 @@ void Game::start(){
 
     }
 
+    
+    
+    
 
 }
 
@@ -168,13 +185,24 @@ void Game::initModels(){
     size.setXYZ(SKYBOX_SIZE,SKYBOX_SIZE,SKYBOX_SIZE);
     skybox = new Cube(imgSkybox, 6,pos, size);
     pos.setXYZ(2,2,1);
-    size.setXYZ(ARN_SIZE,ARN_SIZE,10);
+    size.setXYZ(ARN_SIZE,ARN_SIZE,ARN_UP);
     arene = new Cube(imgArn, 2, pos, size);
     
     pos.setXYZ(ARN_SIZE * -1 / 10 ,2,20);
     tank1 = new Tank(this, imgTnk[0], pos);
     pos.setXYZ(ARN_SIZE / 10 ,2,20);
     tank2 = new Tank(this, imgTnk[1], pos);
+    
+    
+    //init TPS viewPort 
+    dirX = 1;
+    dirY = 0;
+    dirZ = 10;
+    
+    eyeX = 40;
+    eyeY = 0;
+    eyeZ = 950;
+    
     
 }
 
@@ -198,41 +226,10 @@ void Game::cleaner(){
 }
 
 void Game::event(){
-    // innitialisationd des variables
-    float i = 0.0;
-    int x = 0;
-    int y = 0;
-    Uint32 result;
-    
-    //prise des coordonnées de la sourie
-    result = SDL_GetMouseState(&x,&y);
-    
-    //coordonées sourie au centre de l'écran
-    x -= WIN_WIDTH/2;
-    y -= WIN_HEIGHT/2;
-    
-    
-    //on applique les changement de direction
-    if (y < -1){
-        dirZ+= 0.1;
-    }
-    if (y > 1){
-        dirZ-= 0.1;
-    }
-    if (x < -1){
-        alphaDir+=2;
-    }
-    if (x > 1){
-        alphaDir-=2;
-    }
-    
-    //calcul de la direction du regard
-    dirY = eyeY + sin(alphaDir * TO_RAD);
-    dirX = eyeX + cos(alphaDir * TO_RAD);
-    
     //gestion des evenements clavier
+    int only_one;
     SDL_Event event;
-    SDL_PollEvent(&event);
+    only_one = SDL_PollEvent(&event);
         states = SDL_GetKeyboardState(NULL);
         if (event.type == SDL_QUIT || states[SDL_SCANCODE_ESCAPE])
             isRunning = false;
@@ -276,6 +273,11 @@ void Game::event(){
             }
         
         }
+    
+        
+        if(states[SDL_SCANCODE_F1] && only_one == 1){
+            first_person = !first_person;
+        }
         
     SDL_WarpMouseInWindow(win, WIN_WIDTH/2 , WIN_HEIGHT/2);
     tick++;
@@ -295,6 +297,31 @@ void Game::updateModels(){
     
     tank1->update();
     tank2->update();
+    
+    
+    tank1->getPos().getXYZ(&tank1dirX, &tank1dirY, &tank1dirZ);
+    tank1->getPos().getXYZ(&tank1eyeX, &tank1eyeY, &tank1eyeZ);
+    tank1dirZ += 5;
+    tank1eyeZ += 25;
+    tank1dirX += cos((tank1->getDirection()-90) * TO_RAD) * 50;
+    tank1dirY += sin((tank1->getDirection()-90) * TO_RAD) * 50;
+
+    tank1eyeX += cos((tank1->getDirection()-90) * TO_RAD) * 10;
+    tank1eyeY += sin((tank1->getDirection()-90) * TO_RAD) * 10;
+    
+    
+    
+    tank2->getPos().getXYZ(&tank2dirX, &tank2dirY, &tank2dirZ);
+    tank2->getPos().getXYZ(&tank2eyeX, &tank2eyeY, &tank2eyeZ);
+    tank2dirZ += 5;
+    tank2eyeZ += 25;
+    tank2dirX += cos((tank2->getDirection()-90) * TO_RAD) * 50;
+    tank2dirY += sin((tank2->getDirection()-90) * TO_RAD) * 50;
+
+    tank2eyeX += cos((tank2->getDirection()-90) * TO_RAD) * 10;
+    tank2eyeY += sin((tank2->getDirection()-90) * TO_RAD) * 10;
+    
+   
 }
 
 

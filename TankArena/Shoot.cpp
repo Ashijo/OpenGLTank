@@ -41,7 +41,7 @@ Shoot::Shoot(Point from, int angle, GLuint idText, Tank* enemy){
     
     Point pos(fX ,fY ,30 );
     
-    body = new Sphere(idText, pos, 3);
+    body = new Sphere(idText, pos, 2);
     this-> enemy = enemy;
 }
 

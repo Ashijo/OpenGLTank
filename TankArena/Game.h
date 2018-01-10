@@ -60,10 +60,14 @@ private:
     Tank* tank2      = NULL;
     std::vector <Shoot*> shoots;
     
-    
+    //cams
     double eyeX, eyeY, eyeZ, dirX, dirY, dirZ;
+    double tank1eyeX, tank1eyeY, tank1eyeZ, tank1dirX, tank1dirY, tank1dirZ;
+    double tank2eyeX, tank2eyeY, tank2eyeZ, tank2dirX, tank2dirY, tank2dirZ;
+    
     int alphaDir = 0;
     int tick = 0;
+    bool first_person = false;
     
     const Uint8* states;
     GLuint imgSkybox[6];

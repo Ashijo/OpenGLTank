@@ -26,7 +26,7 @@ public:
     
     void getXY(int* x, int* y);
     void getXYZ(int* x, int* y, int* z);
-    
+    void getXYZ(double* x, double* y, double* z);
     
     //setter
     void setX(int x);

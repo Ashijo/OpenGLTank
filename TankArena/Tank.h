@@ -40,6 +40,8 @@ public:
     void mooveRight();
     void mooveLeft();
     
+    void checkPos();
+    
     Tank* getTankPtr();
     Point getPos();
     

@@ -12,6 +12,7 @@
  */
 
 #include "Tank.h"
+#include "Constantes.h"
 
 Tank::Tank() {
 }
@@ -162,5 +163,32 @@ int Tank::getDirection(){
 
 void Tank::update(){
     delay--;
+    checkPos();
 }
 
+void Tank::checkPos(){
+
+    int posX, posY, posZ;
+    
+    pos.getXYZ(&posX, &posY, &posZ);
+      
+    if (
+            posX + 10 < ARN_SIZE * -1 ||
+            posX - 10 > ARN_SIZE ||
+            posY + 10 < ARN_SIZE * -1 ||
+            posY - 10 > ARN_SIZE
+            
+            ){
+   
+        pos.setZ(posZ -1);
+        updatePos();
+    } 
+    
+    if (posZ < -1){
+    
+        isShooted();
+    
+    }
+    
+
+}

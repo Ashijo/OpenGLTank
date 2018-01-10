@@ -47,6 +47,12 @@ void Point::getXYZ(int* x, int* y, int* z){
     *z = this->z;
 };
 
+void Point::getXYZ(double* x, double* y, double* z){
+    *x = this->x;
+    *y = this->y;
+    *z = this->z;
+};
+
 
 void Point::setX(int x){
     this->x = x;

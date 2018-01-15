@@ -52,13 +52,10 @@ Tank::Tank(Game* ctx, GLuint idText, Point pos){
 void Tank::render(){
     glPushMatrix();
     
-    
     body->render(dirAngle);
     canon->render(90,0,dirAngle);
     
     glPopMatrix();
-    
-    
 };
 
 Tank* Tank::getTankPtr(){
@@ -68,29 +65,51 @@ Tank* Tank::getTankPtr(){
 bool Tank::checkCol(int x, int y){
     bool respons = false;
     
-    int enX, enY, myX, myY, sizeX, sizeY;
+    int enX, enY, sizeX, sizeY;
     ctx->getEnemyPtr(ref)->getPos().getXY(&enX, &enY);
-    pos.getXY(&myX, &myY);
     size.getXY(&sizeX, &sizeY);
-    myX += x;
-    myY += y;
     
     if(
-            myX-sizeX >= enX+sizeX ||
-            myX+sizeX <= enX-sizeX ||
-            myY-sizeY >= enY+sizeY ||
-            myY+sizeY <= enY-sizeY 
-            
+        x-sizeX >= enX+sizeX ||
+        x+sizeX <= enX-sizeX ||
+        y-sizeY >= enY+sizeY ||
+        y+sizeY <= enY-sizeY
         ){
         respons = true;
     }
     
     return respons;
-
 };
     
 Point Tank::getPos(){
     return pos;
+}
+
+void Tank::right(){
+    int x,y, mX, mY;
+    pos.getXY(&x,&y);
+    
+    mY = SPEED* sin(TO_RAD * (dirAngle-180));
+    mX = SPEED* cos(TO_RAD * (dirAngle-180));
+    
+    if(checkCol(mX + x, mY + y)){
+        pos.setXY(x + mX, y + mY);
+        updatePos();
+    }
+
+}
+
+void Tank::left(){
+    int x,y, mX, mY;
+    pos.getXY(&x,&y);
+    
+    mY = SPEED* sin(TO_RAD * dirAngle);
+    mX = SPEED* cos(TO_RAD * dirAngle);
+    
+    if(checkCol(mX + x, mY + y)){
+        pos.setXY(x + mX,y + mY);
+        updatePos();
+    }
 }
 
 void Tank::avancer(){
@@ -100,31 +119,32 @@ void Tank::avancer(){
     mY = SPEED* sin(TO_RAD * (dirAngle-90));
     mX = SPEED* cos(TO_RAD * (dirAngle-90));
     
-    if(checkCol(mX, mY)){
-    pos.setXY(x + mX,y + mY);
-    updatePos();
+    if(checkCol(mX + x, mY + y)){
+        pos.setXY(x + mX,y + mY);
+        updatePos();
     }
 }
     
  void Tank::reculer(){
- int x,y;
+ int x,y, mX, mY;
     
-    pos.getXY(&x,&y);
+    pos.getXY(&mX,&mY);
  
-    y -= SPEED* sin(TO_RAD * (dirAngle-90));
-    x -= SPEED* cos(TO_RAD * (dirAngle-90));
+    y = SPEED* sin(TO_RAD * (dirAngle-90));
+    x = SPEED* cos(TO_RAD * (dirAngle-90));
     
-    pos.setXY(x,y);
-    updatePos();
- 
+    if (checkCol(mX - x, mY - y)){
+        pos.setXY(mX-x,mY-y);
+        updatePos();
+    }
  }   
 
 void Tank::updatePos(){
-    int x,y;
+    int x,y,z;
     
-    pos.getXY(&x,&y);
-    body->setPos(x,y);
-    canon->setPos(x,y);
+    pos.getXYZ(&x,&y,&z);
+    body->setPos(x,y,z);
+    canon->setPos(x,y,z + size.getZ());
 }
 
 bool Tank::shoot(){
@@ -140,14 +160,12 @@ bool Tank::shoot(){
 };
 void Tank::isShooted(){
     std::cout<< "Tank " << ref << " is shooted" << std::endl;
-    
     hp--;
     std::cout << "hp left : " << hp << std::endl;
     
     if (hp <= 0 ){
         ctx->endGame();
     }
-    
 };
 
 void Tank::mooveRight(){
@@ -167,28 +185,20 @@ void Tank::update(){
 }
 
 void Tank::checkPos(){
-
     int posX, posY, posZ;
-    
     pos.getXYZ(&posX, &posY, &posZ);
       
     if (
             posX + 10 < ARN_SIZE * -1 ||
-            posX - 10 > ARN_SIZE ||
+            posX - 10 > ARN_SIZE      ||
             posY + 10 < ARN_SIZE * -1 ||
             posY - 10 > ARN_SIZE
-            
             ){
-   
         pos.setZ(posZ -1);
         updatePos();
-    } 
-    
-    if (posZ < -1){
-    
-        isShooted();
-    
     }
     
-
+    if (posZ < -1){
+        isShooted();
+    }
 }

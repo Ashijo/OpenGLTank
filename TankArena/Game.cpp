@@ -245,7 +245,13 @@ void Game::event(){
         if(states[SDL_SCANCODE_D]){
             tank2->mooveRight();
         }
+        if(states[SDL_SCANCODE_E]){
+            tank2->right();
+        }
         if(states[SDL_SCANCODE_Q]){
+            tank2->left();
+        }
+        if(states[SDL_SCANCODE_SPACE]){
             
             if (tank2->shoot()){
                 Shoot* s = new Shoot(tank2->getPos(), tank2->getDirection(), imgTnk[2], tank1);
@@ -265,6 +271,12 @@ void Game::event(){
         }
         if(states[SDL_SCANCODE_RIGHT]){
             tank1->mooveRight();
+        }
+        if(states[SDL_SCANCODE_PAGEUP]){
+            tank1->left();
+        }
+        if(states[SDL_SCANCODE_PAGEDOWN]){
+            tank1->right();
         }
         if(states[SDL_SCANCODE_RCTRL]){
             if (tank1->shoot()){

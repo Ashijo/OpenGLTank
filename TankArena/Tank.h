@@ -34,6 +34,9 @@ public:
     void avancer();
     void reculer();
     
+    void right();
+    void left();
+    
     bool shoot();
     void isShooted();
     

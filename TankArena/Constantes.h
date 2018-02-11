@@ -14,7 +14,7 @@
 #ifndef CONSTANTES_H
 #define CONSTANTES_H
 
-const int WIN_WIDTH = 1200;
+const int WIN_WIDTH = 1250;
 const int WIN_HEIGHT = 780;
 const int FPS = 60;
 const float PI = 3.14159265358979323846;

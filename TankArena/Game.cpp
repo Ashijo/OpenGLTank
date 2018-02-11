@@ -133,7 +133,7 @@ void Game::initSDL(){
     IMG_Init(IMG_INIT_JPG);
 
 
-    win = SDL_CreateWindow("TPTankArena", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+    win = SDL_CreateWindow("TankArena", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     if(SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2) < 0) { printf("opengl error: %s\n", SDL_GetError()); }
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
@@ -239,18 +239,18 @@ void Game::event(){
         if(states[SDL_SCANCODE_S]){
             tank2->reculer();
         }
-        if(states[SDL_SCANCODE_A]){
+        if(states[SDL_SCANCODE_Q]){
             tank2->mooveLeft();
         }
-        if(states[SDL_SCANCODE_D]){
+        if(states[SDL_SCANCODE_E]){
             tank2->mooveRight();
         }
-        if(states[SDL_SCANCODE_E]){
+        if(states[SDL_SCANCODE_D]){
             tank2->right();
         }
-        if(states[SDL_SCANCODE_Q]){
+        if(states[SDL_SCANCODE_A]){
             tank2->left();
-        }
+        } 
         if(states[SDL_SCANCODE_SPACE]){
             
             if (tank2->shoot()){
@@ -266,16 +266,16 @@ void Game::event(){
         if(states[SDL_SCANCODE_DOWN]){
             tank1->reculer();
         }
-        if(states[SDL_SCANCODE_LEFT]){
+        if(states[SDL_SCANCODE_PAGEUP]){
             tank1->mooveLeft();
         }
-        if(states[SDL_SCANCODE_RIGHT]){
+        if(states[SDL_SCANCODE_PAGEDOWN]){
             tank1->mooveRight();
         }
-        if(states[SDL_SCANCODE_PAGEUP]){
+        if(states[SDL_SCANCODE_LEFT]){
             tank1->left();
         }
-        if(states[SDL_SCANCODE_PAGEDOWN]){
+        if(states[SDL_SCANCODE_RIGHT]){
             tank1->right();
         }
         if(states[SDL_SCANCODE_RCTRL]){
